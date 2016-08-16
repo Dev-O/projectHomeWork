@@ -1,6 +1,6 @@
 == Reference Documentation
 This is documentation for project X.
-include::{snippets}/address/http-request.adoc[]
-include::{snippets}/address/http-response.adoc[]
-include::{snippets}/address/request-parameters.adoc[]
-include::{snippets}/address/response-fields.adoc[]
+include::{snippets}/texts/http-request.adoc[]
+include::{snippets}/texts/http-response.adoc[]
+include::{snippets}/texts/request-parameters.adoc[]
+include::{snippets}/texts/response-fields.adoc[]

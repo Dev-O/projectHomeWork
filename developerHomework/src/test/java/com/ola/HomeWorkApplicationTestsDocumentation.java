@@ -17,7 +17,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.JUnitRestDocumentation;
-import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -46,22 +45,13 @@ public class HomeWorkApplicationTestsDocumentation extends DeveloperHomeworkAppl
     	String toput = "?text" + "=How are you" ;
     	mockMvc.perform(get("/texts/" + toput))
         .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.street").value("12345 Horton Ave"))
-      //  .andDo(document("address", links( 	
-        	//	halLinks(), linkWithRel("Link to the bravo resource"))))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.text").value("How are you"))
     			.andDo(document("texts", responseFields( 
-    					fieldWithPath("street").description("The user's contact details"), 
-    					fieldWithPath("state").description("The user's email address"),
-    					//fieldWithPath("_links").description("Link to the address resource"),
-    					//fieldWithPath("_links.self").description("Link to the self"),
-    					fieldWithPath("_links.self.href").description("Link href"),
-    					fieldWithPath("email")
-						.type(JsonFieldType.STRING) 
-						.description("The user's email address"),
-    					fieldWithPath("pmb").description("The user's email address")),
+    					fieldWithPath("text").description("The user's contact details"), 
+    					fieldWithPath("_links.self.href").description("Link href")),
     					requestParameters( 
-								parameterWithName("name").description("The page to retrieve"))));
+								parameterWithName("text").description("The text to return"))));
     									
         /*
     									.andDo(document("locations", pathParameters( 

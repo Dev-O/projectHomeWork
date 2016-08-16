@@ -1,10 +1,17 @@
 package com.ola;
+import org.springframework.hateoas.ResourceSupport;
 
-public class TextService {
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+
+
+public class TextService extends ResourceSupport {
 	
     private final String text;
 
-    public TextService( String text) {   
+    @JsonCreator
+    public TextService( @JsonProperty("text") String text) {   
         this.text = text ;
     }
 
