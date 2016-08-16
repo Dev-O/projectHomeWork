@@ -7,32 +7,28 @@
   
  <!-- User Name --> 
  
- <div id="name-group" class="form-group" ng-class="{'has-error': userForm.username.$invalid && !userForm.username.$pristine && submitted}">
-    <label>User Name :</label>
-    <input type="text" name="name" class="form-control" placeholder="Bruce Wayne" ng-model="posting.userName" ng-required="true"></input>
-    <p ng-show="userForm.userName.$invalid && !userForm.userName.$pristine && submitted" class="help-block">A user name is required.</p>
-  </div>
+ 
  
   <!-- Post Text -->
- <div class="form-group" ng-class="{'has-error' : userForm.username.$invalid && !userForm.username.$pristine && submitted}" >
+ <div class="form-group" ng-class="{'has-error' : userForm.postText.$invalid && !userForm.postText.$pristine && submitted}" >
             <label>Post Text :</label>
             <input type="text" name="postText" class="form-control" placeholder="Bruce Wayne" ng-model="posting.postText" ng-minlength="3" ng-maxlength="8" ng-required="true">
-       <p ng-show ="userForm.postText.$error.minlength && submitted" class="help-block">Username is too short.</p>
-       <p ng-show ="userForm.postText.$error.maxlength && submitted" class="help-block">Username is too long.</p>
+       <p ng-show ="userForm.postText.$error.minlength && submitted" class="help-block">post is too short.</p>
+       <p ng-show ="userForm.postText.$error.maxlength && submitted" class="help-block">post is too long.</p>
        <p ng-show="userForm.postText.$invalid && !userForm.username.$pristine && submitted" class="help-block">Please send a text to server</p>
-       
+  </div>
+  <br></br>
+  <!-- SUBMIT BUTTON -->
+  <div>
+  <button type="submit" class="btn btn-primary btn-md">
+     Submit!</button>   <br></br> 
 </div>
 
- <!-- City -->
- <div id="name-group" class="form-group" ng-class="{'has-error' : userForm.username.$invalid && !userForm.username.$pristine && submitted}">
-    <label>City :</label>
-    <input type="text" name="city" class="form-control" placeholder="Toronto" ng-model="posting.city" ng-required="true"></input>
-    <p ng-show="userForm.city.$invalid && !userForm.city.$pristine && submitted" class="help-block">Pls provide a city</p>
-  </div>
+<div><p>{{responseDatatext}}</p></div>
+
+
  
-  <!-- SUBMIT BUTTON -->
-  <button type="submit" class="btn btn-primary btn-md">
-     Submit!</button>
+  
 </form>
 <br></br>
 <div>

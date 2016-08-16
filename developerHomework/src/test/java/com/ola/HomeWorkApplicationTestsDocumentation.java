@@ -42,16 +42,16 @@ public class HomeWorkApplicationTestsDocumentation extends DeveloperHomeworkAppl
 @Test
  
     public void validate_get_address() throws Exception {
-    	String toput = "?text" + "=How are you" ;
+    	String toput = "?postText" + "=How are you" ;
     	mockMvc.perform(get("/texts/" + toput))
         .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.text").value("How are you"))
+                .andExpect(jsonPath("$.postText").value("How are you"))
     			.andDo(document("texts", responseFields( 
-    					fieldWithPath("text").description("The user's contact details"), 
+    					fieldWithPath("postText").description("The user's texts"), 
     					fieldWithPath("_links.self.href").description("Link href")),
     					requestParameters( 
-								parameterWithName("text").description("The text to return"))));
+								parameterWithName("postText").description("The text to return"))));
     									
         /*
     									.andDo(document("locations", pathParameters( 

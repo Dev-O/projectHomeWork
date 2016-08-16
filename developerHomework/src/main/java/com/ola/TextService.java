@@ -8,15 +8,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class TextService extends ResourceSupport {
 	
-    private final String text;
+    private final String postText;
 
     @JsonCreator
-    public TextService( @JsonProperty("text") String text) {   
-        this.text = text ;
+    public TextService( @JsonProperty("postText") String postText) {   
+        this.postText= postText ;
     }
 
     public String getText() {
-        return text;
+        return postText;
     }
 
 }
