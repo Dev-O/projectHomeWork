@@ -83,11 +83,6 @@ public class TextServiceController {
 		}
     }
 	
-	
-	
-	
-	
-	
 	// This method creates text object and persis it to the db using hibernate and spring data jpa
 	
 	
