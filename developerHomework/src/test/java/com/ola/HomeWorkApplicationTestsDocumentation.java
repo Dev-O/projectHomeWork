@@ -7,6 +7,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,16 +43,19 @@ public class HomeWorkApplicationTestsDocumentation extends DeveloperHomeworkAppl
 @Test
  
     public void validate_get_address() throws Exception {
-    	String toput = "?postText" + "=How are you" ;
+    	String toput = "?text" + "=How are you" ;
     	mockMvc.perform(get("/texts/" + toput))
         .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.postText").value("How are you"))
+               .andExpect(jsonPath("$.text").value("How are you"))
     			.andDo(document("texts", responseFields( 
-    					fieldWithPath("postText").description("The user's texts"), 
+    					fieldWithPath("text").description("The user's texts"), 
     					fieldWithPath("_links.self.href").description("Link href")),
     					requestParameters( 
-								parameterWithName("postText").description("The text to return"))));
+								parameterWithName("text").description("The text to return"))));
+    	
+    	
+    	
     									
         /*
     									.andDo(document("locations", pathParameters( 
@@ -75,5 +79,16 @@ public class HomeWorkApplicationTestsDocumentation extends DeveloperHomeworkAppl
     
     */
 }
-
+public void validate_address() throws Exception {
+	String toput = "?text" + "=How are you" ;
+	mockMvc.perform(post("/texts/" + toput))
+    .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+           .andExpect(jsonPath("$.text").value("How are you"))
+			.andDo(document("texts", responseFields( 
+					fieldWithPath("text").description("The user's texts"), 
+					fieldWithPath("_links.self.href").description("Link href")),
+					requestParameters( 
+							parameterWithName("text").description("The text to return"))));
+}
 }

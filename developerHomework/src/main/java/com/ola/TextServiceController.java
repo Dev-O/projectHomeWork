@@ -17,23 +17,39 @@ public class TextServiceController {
 	
 	@RequestMapping(value = "/texts", method = RequestMethod.GET, 
             produces = "application/json")
-    public HttpEntity<TextService> sendAddress(
-       @RequestParam(value = "postText", required = false, defaultValue = " Hello World") String postText) {
-	 TextService textService = new TextService(postText);
+    public Object sendAddress(
+       @RequestParam(value = "text", required = false, defaultValue = " Hello World") String text) {
+		
+		try{
+	 TextService textService = new TextService(text);
         
-	 textService.add(linkTo(methodOn(TextServiceController.class).sendAddress(postText)).withSelfRel());
+	 textService.add(linkTo(methodOn(TextServiceController.class).sendAddress(text)).withSelfRel());
             
-        return new ResponseEntity<TextService>(textService, HttpStatus.OK);
-    }
+        return new ResponseEntity<TextService>(textService, HttpStatus.OK);}
+    
+	
+	catch(Exception e){
+		System.out.print(e.getMessage());
+		
+		return e.getMessage();
+	}}
 	@RequestMapping(value = "/texts", method = RequestMethod.POST, 
             produces = "application/json")
-    public HttpEntity<TextService> sendAddress2(
-       @RequestParam(value = "postText", required = false, defaultValue = " Hello World") String postText) {
-	 TextService textService = new TextService(postText);
+    public Object sendAddress2(
+       @RequestParam(value = "text", required = false, defaultValue = " Hello World") String text) {
+	 
+		try{
+		TextService textService = new TextService(text);
         
-	 textService.add(linkTo(methodOn(TextServiceController.class).sendAddress(postText)).withSelfRel());
+	 textService.add(linkTo(methodOn(TextServiceController.class).sendAddress(text)).withSelfRel());
             
-        return new ResponseEntity<TextService>(textService, HttpStatus.OK);
+        return new ResponseEntity<TextService>(textService, HttpStatus.OK);}
+		
+		catch(Exception e){
+			System.out.print(e.getMessage());
+			
+			return e.getMessage();
+		}
     }
 	
 	 
