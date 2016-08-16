@@ -46,7 +46,7 @@ public class HomeWorkApplicationTestsDocumentation extends DeveloperHomeworkAppl
     	String toput = "?text" + "=How are you" ;
     	mockMvc.perform(get("/texts/" + toput))
         .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.street").value("12345 Horton Ave"))
       //  .andDo(document("address", links( 	
         	//	halLinks(), linkWithRel("Link to the bravo resource"))))
