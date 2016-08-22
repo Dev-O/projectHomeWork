@@ -20,6 +20,9 @@ public class Text extends ResourceSupport {
 	@Column(name="TEXT_POSTED", nullable=false,updatable=false)
 	private final String text;
 	
+	@Column(name="USER _ NAME", nullable=false,updatable=false)
+	private final String userName;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	@Column(name = "id", updatable = false, nullable = false)
@@ -32,22 +35,27 @@ public class Text extends ResourceSupport {
 	
 
     @JsonCreator
-    public Text( @JsonProperty("text") String text, @JsonProperty("timePosted") Timestamp timePosted) {   
+    public Text(@JsonProperty("userName") String userName, @JsonProperty("text") String text, @JsonProperty("timePosted") Timestamp timePosted) {   
         this.text= text ;
+        this.userName = userName;
     }
     
-    public String getPostedText(){
+    public String getText(){
     	
     	return text;
     }
-public long getPostId(){
+  
+ public Timestamp getTimePosted(){
     	
-    	return id;
+    	return timePosted;
     }
+ 
+ public String getUserName(){
+ 	
+ 	return userName;
+ }
+ 
 
 
-    public String getText() {
-        return text;
-    }
 
 }

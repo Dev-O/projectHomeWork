@@ -1,7 +1,7 @@
 package com.ola;
 
 import java.util.List;
-
+import java.sql.Timestamp;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 
@@ -14,6 +14,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 		   * automagically generated from its signature by Spring Data JPA.
 		   */
 		
-		 // public List<Text> findByUserName(String UserName);
+		 public List<Text> findByUserName(String UserName);
+		 
+		 public Text findByTimePosted(Timestamp timest);
 		   
 }

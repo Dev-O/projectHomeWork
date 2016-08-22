@@ -1,5 +1,7 @@
 package com.ola;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -12,6 +14,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,6 +28,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 public class HomeWorkApplicationTestsDocumentation extends DeveloperHomeworkApplicationTests {
+	
+	
+	@Autowired
+	public TextRepository textDao;
 	
 	@Rule
 	public JUnitRestDocumentation restDocumentation =
@@ -91,4 +100,25 @@ public void validate_address() throws Exception {
 					requestParameters( 
 							parameterWithName("text").description("The text to return"))));
 }
+
+
+
+
+@Test
+public void createAndValidateUser() {	
+	String txt = "hi there you!";
+	long time = System.currentTimeMillis();
+	Timestamp timeStamp = new Timestamp(time);
+	String userName = "benson";
+	Text dbText = new Text(userName, txt, timeStamp);
+	textDao.save(dbText);
+	Text newText = textDao.findByTimePosted(timeStamp);
+	assertNotNull(newText);
+	assertEquals(userName,newText.getUserName());
+	assertEquals(txt,newText.getText());
+}
+
+
+
+
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-var textAppp = angular.module('textAppp', ['ui.router']);
+var textAppp = angular.module('textAppp', ['ui.router','angularUtils.directives.dirPagination']);
 
 textAppp.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.when("", "/index");
