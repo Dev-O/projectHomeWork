@@ -17,17 +17,16 @@ import javax.persistence.Table;
 @Table(name = "Posts")
 public class Text extends ResourceSupport {
 
-	@Column(name="TEXT_POSTED", nullable=false,updatable=false)
-	private final String text;
-	
-	@Column(name="USER _ NAME", nullable=false,updatable=false)
-	private final String userName;
-	
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
-	@Column(name = "id", updatable = false, nullable = false)
-    private long id;
-    
+	@Column(name="OID")
+	private Long oid;
+	
+	@Column(name="TEXT_POSTED", nullable=false,updatable=false)
+	private  String text;
+	
+	@Column(name="USER_NAME", nullable=false,updatable=false)
+	private  String userName;
 	
 	@NotNull
 	@Column(name="TIME_CREATED", nullable=false,updatable=false)
@@ -38,24 +37,58 @@ public class Text extends ResourceSupport {
     public Text(@JsonProperty("userName") String userName, @JsonProperty("text") String text, @JsonProperty("timePosted") Timestamp timePosted) {   
         this.text= text ;
         this.userName = userName;
+        this.timePosted = timePosted;
+    }
+    
+   
+    public Long getOid() {
+		return oid;
+	}
+
+    public void setOid (Long oid) {
+		this.oid = oid;
+	}
+    public Text(){
+    	
     }
     
     public String getText(){
     	
     	return text;
     }
-  
- public Timestamp getTimePosted(){
+    
+public void setText(String txt){
+    	
+    	text =txt;
+    }
+    
+    public Timestamp getTimePosted(){
     	
     	return timePosted;
     }
+    
+    
+ public void getTimePosted(Timestamp tmp){
+    	
+    	timePosted = tmp;
+    }
+   
  
- public String getUserName(){
+public String getUserName(){
  	
  	return userName;
  }
+
+public void setUserName(String tmp){
+ 	userName = tmp;
+ 	
+ }
+
  
 
-
+@Override
+public String toString() {
+	return "Text [oid=" + oid + ", userName=" + userName + ", text=" + text + ", timePosted=" + timePosted + "]";
+}
 
 }

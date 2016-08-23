@@ -57,3 +57,18 @@ body {
 	background-color: #336699;
     border-color: #30587F;
 }
+.sort-icon {
+    font-size: 9px;
+    margin-left: 5px;
+}
+
+th {
+    cursor:pointer;
+}
+
+.divtab {
+    border: 4px solid black;
+   
+    background: black;
+    border-radius: 40px;
+}

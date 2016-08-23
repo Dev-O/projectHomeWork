@@ -4,7 +4,6 @@ package com.ola;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import java.net.URI;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -14,153 +13,116 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("texts")
 public class TextServiceController {
 	
 	// data access object for crude operation against the db
 	@Autowired
 	public TextRepository textdao;
 	
-	/*
-	 * ***
-	
-	@RequestMapping(value = "/texts", method = RequestMethod.GET, 
-            produces = "application/json")
-    public Object sendAddress(
-       @RequestParam(value = "text", required = false, defaultValue = " Hello World") String text) {
-		
-		try{
-			long time = System.currentTimeMillis();
-			  Timestamp timestamp = new Timestamp(time);
-		Text textService = new Text(text, timestamp);
-        
-	 textService.add(linkTo(methodOn(TextServiceController.class).sendAddress(text)).withSelfRel());
-            
-        return new ResponseEntity<Text>(textService, HttpStatus.OK);}
-    
-	
-	catch(Exception e){
-		System.out.print(e.getMessage());
-		
-		return e.getMessage();
-	}}
-	@RequestMapping(value = "/text", method = RequestMethod.POST, 
-            produces = "application/json")
-    public Object sendAddress2(
-       @RequestParam(value = "text", required = false, defaultValue = " Hello World") String text) {
-	 
-		try{
-			  long time = System.currentTimeMillis();
-			  Timestamp timestamp = new Timestamp(time);
-		Text textService = new Text(text, timestamp);
-	    
-		textService.add(linkTo(methodOn(TextServiceController.class).sendAddress(text)).withSelfRel());
-            
-        return new ResponseEntity<Text>(textService, HttpStatus.OK);}
-		
-		catch(Exception e){
-			System.out.print(e.getMessage());
-			
-			return e.getMessage();
-		}
-    }
-    
-     */
-	
+
 	// return user sent texts
-	@RequestMapping(value = "/texts", method = RequestMethod.POST, 
+	
+	@RequestMapping(method = RequestMethod.POST, 
             produces = "application/json")
     public Object sendAddress3(
-       @RequestParam(value = "text", required = false, defaultValue = " Hello World") String text, 
-       @RequestParam(value = "userName", required = true) String userName) {
+       @RequestParam(value = "text", required = false) String text, 
+       @RequestParam(value = "userName", required = false) String userName) {
 	 
 		try{
-			  long time = System.currentTimeMillis();
-			  Timestamp timestamp = new Timestamp(time);
+	    
+		long time = System.currentTimeMillis();
+	    Timestamp timestamp = new Timestamp(time);
 		Text textService = new Text(userName, text, timestamp);
-		create(userName, text,timestamp);
+		String xy = create(userName, text,timestamp);
+		System.out.println(xy);
 	    textService.add(linkTo(methodOn(TextServiceController.class).sendAddress3(text, userName)).withSelfRel());
             
         return new ResponseEntity<Text>(textService, HttpStatus.OK);}
 		
 		catch(Exception e){
 			System.out.print(e.getMessage());
-			
 			return e.getMessage();
 		}
     }
 	
 	// this method gets all posted texts
 	
-	@RequestMapping(value = "/texts", method = RequestMethod.GET, 
+	@RequestMapping(value = "{alltext}", method = RequestMethod.GET, 
             produces = "application/json")
     public Object getAllText(
-       @RequestParam(value = "text", required = false, defaultValue = " Hello World") String text) {
-	   
+    		@PathVariable("alltext") String alltext) {
+		//Iterable<Text> listOfAlltexts = null;
+		 List<Text> listOfTexts = new ArrayList<Text>();
+		//HttpHeaders responseHeaders = new HttpHeaders();
+	   if(alltext != null){
 		try{
 			 
-			  Iterable<Text> listOfAlltexts = textdao.findAll();
-			   List<String> containers = new ArrayList<>();
-			   for(Text texts : listOfAlltexts){
-				   containers.add(texts.getText());   
-			   }
-	            
-       // return new ResponseEntity<List<String>>(containers, HttpStatus.OK);}
-			   HttpHeaders responseHeaders = new HttpHeaders();
-			   responseHeaders.set("origin", "localhost:/"); 
+			
+			
+			listOfTexts = textdao.findAllTexts();
+		
 			   
-			   return new ResponseEntity<List<String>>(containers, responseHeaders, HttpStatus.OK);
+			  // responseHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+			  
+
+			
+			   
+			   return new ResponseEntity<Iterable<Text>>( listOfTexts, HttpStatus.OK);
+			  
 		}		   		   
 		catch(Exception e){
-			System.out.print(e.getMessage());
-			
-			return e.getMessage();
+			return "Exception Encountered";	
 		}
+		
+	   }
+	   
+	   else {
+		   
+		   return "URL missing parameter";
+	   }
     }
 	
 	// Endpoint to retrieve all user texts
-	@RequestMapping(value = "/texts", method = RequestMethod.GET, 
+	
+	///employees/234/messages?  texts/olammon/usertexts
+	@RequestMapping(value = "{userName}/usertexts", method = RequestMethod.GET, 
             produces = "application/json")
     public Object getAllUserTexts(
-       @RequestParam(value = "text", required = false, defaultValue = " Hello World") String userName) {
-		List<String> listOfUsers = new ArrayList<>(); 
-		List<Text> listOfUsersList = new ArrayList<>();
-		try{		 
-	
-			listOfUsers = new ArrayList<>();
-			
-			listOfUsersList= textdao.findByUserName(userName);
-			
-			 List<String> containers = new ArrayList<>();
-			   for(Text texts : listOfUsersList){
-				   listOfUsers.add(texts.getText());   
-			   }		
-			
+    		@PathVariable("userName")  String userName) {
+		HttpHeaders responseHeaders = new HttpHeaders();
+		if(userName !=null){
+		
+		List<Text> listOfUsersTexts = new ArrayList<>();
+		try{	
+	     	// responseHeaders.set("origin", "localhost:/");   
+			 listOfUsersTexts= textdao.findByUserName(userName);
+			 return new ResponseEntity<List<Text>>(listOfUsersTexts, responseHeaders, HttpStatus.OK);
+			  // return listOfUsersTexts; 
 		}
-		catch(Exception e){
-			System.out.print(e.getMessage());
-			
-			return e.getMessage();
+		
+		catch(Exception ex){
+			System.out.print(ex.getMessage());
+			return "Exception Encountered";
 		}
-		  if(listOfUsers.size()!= 0){
-		        return new ResponseEntity<List<String>>(listOfUsers, HttpStatus.OK);}
-			    
-			    else 	
-			    	return "failure";    
+		
+		}
+		else   return "URL missing parameter"; 
     }
 	
-	
-	
-	
-	
 	// This method creates text object and persist it to the db using hibernate and spring data jpa
-	
 	
 	public String create(String userName , String userPost, Timestamp timestamp) {
 	   
